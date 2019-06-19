@@ -2,21 +2,22 @@ import React, { Component } from 'react';
 import jsonData from '../data/jsonData'
 
 export class MovieList extends Component {
-    constructor() {
+    constructor(props) {
         super();
-        this.movieList = jsonData.data;
+    }
+    componentDidMount(){
+        this.props.sortByTitles();
     }
     render() {
-        console.log(jsonData.data[0])
-        const movieData = this.movieList.map((value, index) => {
-            console.log(value.id)
+        const propsData = this.props.data;
+        const movieData = propsData.map((value, index) => {
             return (
                 <div className="card">
-                    <img src={value.poster_path} />
+                    <img src={value.poster_path} alt={value.title} />
                     <p className="txtcolor">{value.title}</p>
                     <p className="bold">{value.tagline}</p>
                 </div>
-              );
+            );
         })
         return (
             <div className="container1">

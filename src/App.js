@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
-import { MovieList } from './components/movies/MovieList';
-import { MovieSearch } from './components/movies/MovieSearch'
+
+import { MovieSearch } from './Moviesearch/MovieSearch';
+import {ErrorBoundary} from './ErrorsBoundary/ErrorBoundary'
 
 class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      message: 'Welcome Visitor'
-    }
-  }
-  changeMessage() {
-    this.setState({
-      message: "Thank you for subscribing..."
-    })
-  }
   render() {
     return (
       <div>
-        <MovieSearch />
-        <MovieList />
+        <ErrorBoundary>
+          <MovieSearch />
+        </ErrorBoundary>
       </div>
     )
   }
