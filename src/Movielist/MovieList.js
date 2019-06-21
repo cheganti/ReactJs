@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
-import jsonData from '../data/jsonData'
+import Movie from './Movie';
 
 export class MovieList extends Component {
-    constructor(props) {
-        super();
-    }
-    componentDidMount(){
+
+    componentDidMount() {
         this.props.sortByTitles();
     }
     render() {
-        const propsData = this.props.data;
-        const movieData = propsData.map((value, index) => {
-            return (
-                <div className="card">
-                    <img src={value.poster_path} alt={value.title} />
-                    <p className="txtcolor">{value.title}</p>
-                    <p className="bold">{value.tagline}</p>
-                </div>
-            );
-        })
+        const { data } = this.props;
+        const movieData = data.map((value, index) => <Movie key={value.id} movie={value} />)
         return (
             <div className="container1">
                 {movieData}

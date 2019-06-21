@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import jsonData from '../data/jsonData';
+import jsonData from '../data/jsonData.json';
 import { MovieList } from '../Movielist/MovieList';
 
-export class MovieSearch extends Component {
+class MovieSearch extends Component {
     constructor(props) {
         super(props);
         this.jsonData = jsonData;
@@ -13,9 +13,9 @@ export class MovieSearch extends Component {
             inputValues: ""
         };
     }
-    sortByGeners = () => {
-        const sortByGenersTag = this.state.searchResults
-        let sortResult = sortByGenersTag.sort((a, b) => {
+    sortByGengres = () => {
+        const sortByGengresTag = this.state.searchResults
+        let sortResult = sortByGengresTag.sort((a, b) => {
             if (a.genres > b.genres) {
                 return 1
             } else if (a.genres < b.genres) {
@@ -89,22 +89,26 @@ export class MovieSearch extends Component {
         const data = this.state.searchResults;
         return (
             <div className="jumbotron">
-                <div className="searchByDiv">
-                    <input
+                <h1 className="title">Find your movie</h1>
+                <div className="input-group mb-3">
+                    <input className="form-control"
                         type="text"
                         id="search"
                         placeholder="Search..." onChange={this.handleMovieSearch}
                     />
-                    <button onClick={this.onClickResults}>Search</button>
-                    <button onClick={this.sortByGeners}>Genres</button>
-                    <button onClick={this.sortByTitles}>Title</button>
+                    <div className="input-group-append">
+                        <button onClick={this.onClickResults} className="btn btn-success-cus">Search</button>
+                        <button onClick={this.sortByGengres} className="btn btn-success-cus">Genres</button>
+                        <button onClick={this.sortByTitles} className="btn btn-success-cus">Title</button>
+                    </div>
                 </div>
-                <div className="sortByDiv">
-                    <button onClick={this.sortByRelease}>sort By Release</button>
-                    <button onClick={this.sortByRating}>sort By Rating</button>
+                <div className="sortByDiv"><span className="bold">Sort By:</span>
+                    <button onClick={this.sortByRelease} className="btn btn-success-cus">Release Date</button>
+                    <button onClick={this.sortByRating} className="btn btn-success-cus">Rating</button>
                 </div>
                 <MovieList data={data} sortByTitles={this.sortByTitles} />
             </div>
         )
     }
 }
+export default MovieSearch

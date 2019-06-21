@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Dosis:400,700');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -57,10 +54,10 @@ line-height: 26px;
   padding-left: 10px;
 }
 .container{
-  background-color: #fff;
+  background-color: #524c4c;
 }
 .jumbotron{
-  background-color: #fff;
+  background-color: #524c4c;
 }
 @media screen and (min-width: 600px) {
   .card {
@@ -73,9 +70,9 @@ line-height: 26px;
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
-  .card img{
+  /* .card img{
     max-height: 200px;
-  }
+  } */
 }
 img{
   width: 100%;
@@ -91,9 +88,9 @@ img{
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
-  .card img{
+  /* .card img{
     max-height: 200px;
-  }
+  } */
 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
   /* IE10+ specific styles go here */  
@@ -104,9 +101,9 @@ img{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
   }
-  .card img{
+  /* .card img{
     max-height: 200px;
-  }
+  } */
 }
 .newsUrlDiv{
   padding: 10px;
@@ -241,4 +238,18 @@ select.form-control{
     display: block;
     text-align: left;
   }
+}
+
+button.btn.btn-success-cus {
+  background: #39c2d7;
+  border: #39c2d7;
+  color: #ffffff;
+}
+.sortByDiv {
+  text-align: right;
+}
+h1.title {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: normal;
 }
