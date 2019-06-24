@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import jsonData from '../data/jsonData.json';
 import { MovieList } from '../Movielist/MovieList';
 
-class MovieSearch extends Component {
+export default class MovieSearch extends Component {
     constructor(props) {
         super(props);
         this.jsonData = jsonData;
@@ -88,27 +88,28 @@ class MovieSearch extends Component {
     render() {
         const data = this.state.searchResults;
         return (
-            <div className="jumbotron">
-                <h1 className="title">Find your movie</h1>
-                <div className="input-group mb-3">
-                    <input className="form-control"
-                        type="text"
-                        id="search"
-                        placeholder="Search..." onChange={this.handleMovieSearch}
-                    />
-                    <div className="input-group-append">
-                        <button onClick={this.onClickResults} className="btn btn-success-cus">Search</button>
-                        <button onClick={this.sortByGengres} className="btn btn-success-cus">Genres</button>
-                        <button onClick={this.sortByTitles} className="btn btn-success-cus">Title</button>
+            <div>
+                <div className="jumbotron">
+                    <h1 className="title">Find your movie</h1>
+                    <div className="input-group mb-3">
+                        <input className="form-control"
+                            type="text"
+                            id="search"
+                            placeholder="Search..." onChange={this.handleMovieSearch}
+                        />
+                        <div className="input-group-append">
+                            <button onClick={this.onClickResults} className="btn btn-success-cus">Search</button>
+                            <button onClick={this.sortByGengres} className="btn btn-success-cus">Genres</button>
+                            <button onClick={this.sortByTitles} className="btn btn-success-cus">Title</button>
+                        </div>
                     </div>
-                </div>
-                <div className="sortByDiv"><span className="bold">Sort By:</span>
-                    <button onClick={this.sortByRelease} className="btn btn-success-cus">Release Date</button>
-                    <button onClick={this.sortByRating} className="btn btn-success-cus">Rating</button>
+                    <div className="sortByDiv"><span className="bold">Sort By:</span>
+                        <button onClick={this.sortByRelease} className="btn btn-success-cus">Release Date</button>
+                        <button onClick={this.sortByRating} className="btn btn-success-cus">Rating</button>
+                    </div>
                 </div>
                 <MovieList data={data} sortByTitles={this.sortByTitles} />
             </div>
         )
     }
 }
-export default MovieSearch
