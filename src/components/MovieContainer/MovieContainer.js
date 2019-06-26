@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import jsonData from '../data/jsonData.json';
-import { MovieList } from '../Movielist/MovieList';
+import jsonData from '../../data/jsonData.json';
+import MovieList from '../MovieList/MovieList';
+import MovieSorting from '../MovieSorting/MovieSorting';
+import MovieSearch from '../MovieSearch/MovieSearch'
 
-export default class MovieSearch extends Component {
+export default class MovieContainer extends Component {
     constructor(props) {
         super(props);
         this.jsonData = jsonData;
@@ -10,9 +12,12 @@ export default class MovieSearch extends Component {
         this.state = {
             searchResults: this.jsonData.data,
             updatedList: this.jsonData.data,
-            inputValues: ""
+            inputValues: "",
+            isTitle:"Title",
+            isGenres:"genres"
         };
     }
+
     sortByGengres = () => {
         const sortByGengresTag = this.state.searchResults
         let sortResult = sortByGengresTag.sort((a, b) => {
@@ -26,6 +31,7 @@ export default class MovieSearch extends Component {
             searchResults: sortResult
         })
     }
+
     sortByTitles = () => {
         const sortByTitleNames = this.state.searchResults
         let sortResult = sortByTitleNames.sort((a, b) => {
@@ -36,7 +42,8 @@ export default class MovieSearch extends Component {
             }
         })
         this.setState({
-            searchResults: sortResult
+            searchResults: sortResult,
+            isTitle: true
         })
     }
 
@@ -49,6 +56,7 @@ export default class MovieSearch extends Component {
             searchResults: sortResult
         })
     }
+
     sortByRating = () => {
         const sortByMovieRating = this.state.searchResults
         let sortResult = sortByMovieRating.sort((a, b) => {
@@ -68,6 +76,7 @@ export default class MovieSearch extends Component {
             inputValues: targetValues
         })
     }
+
     onClickResults = () => {
         const currentLists = this.state.updatedList;
         let filterValue = this.state.inputValues;
@@ -85,28 +94,14 @@ export default class MovieSearch extends Component {
             searchResults: movieList
         });
     }
+
     render() {
         const data = this.state.searchResults;
         return (
             <div>
                 <div className="jumbotron">
-                    <h1 className="title">Find your movie</h1>
-                    <div className="input-group mb-3">
-                        <input className="form-control"
-                            type="text"
-                            id="search"
-                            placeholder="Search..." onChange={this.handleMovieSearch}
-                        />
-                        <div className="input-group-append">
-                            <button onClick={this.onClickResults} className="btn btn-success-cus">Search</button>
-                            <button onClick={this.sortByGengres} className="btn btn-success-cus">Genres</button>
-                            <button onClick={this.sortByTitles} className="btn btn-success-cus">Title</button>
-                        </div>
-                    </div>
-                    <div className="sortByDiv"><span className="bold">Sort By:</span>
-                        <button onClick={this.sortByRelease} className="btn btn-success-cus">Release Date</button>
-                        <button onClick={this.sortByRating} className="btn btn-success-cus">Rating</button>
-                    </div>
+                    <MovieSearch onClickResults={this.onClickResults} sortByGengres={this.sortByGengres} sortByTitles={this.sortByTitles} handleMovieSearch={this.handleMovieSearch} />
+                    <MovieSorting data={data} sortByRelease={this.sortByRelease} sortByRating={this.sortByRating} />
                 </div>
                 <MovieList data={data} sortByTitles={this.sortByTitles} />
             </div>

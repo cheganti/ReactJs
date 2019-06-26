@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Movie from './Movie';
 
-export class MovieList extends Component {
+class MovieList extends Component {
 
     componentDidMount() {
         this.props.sortByTitles();
@@ -16,3 +16,4 @@ export class MovieList extends Component {
         )
     }
 }
+export default MovieList;

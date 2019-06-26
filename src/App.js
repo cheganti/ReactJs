@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-
-import  MovieSearch  from './Moviesearch/MovieSearch';
-// import {ErrorBoundary} from './ErrorsBoundary/ErrorBoundary'
+import MovieContainer from './components/MovieContainer/MovieContainer';
+import { ErrorBoundary } from './ErrorsBoundary/ErrorBoundary'
 
 class App extends Component {
   render() {
     return (
-          <MovieSearch />
+      <ErrorBoundary>
+        <MovieContainer />
+      </ErrorBoundary>
     )
   }
 }

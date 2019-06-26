@@ -35,7 +35,8 @@ body{
   /* border: 1px solid gray; */
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  padding: 15px;
+  padding: 0px;
+  border: 1px solid #ffffff;
 }
 p.txtcolor{
 font-size: 16px;
