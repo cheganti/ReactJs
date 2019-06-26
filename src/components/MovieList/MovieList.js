@@ -1,19 +1,12 @@
-import React, { Component } from 'react';
-import Movie from './Movie';
+import React, { Component } from "react";
+import "./MovieList.css";
+import Movie from "./Movie";
 
-class MovieList extends Component {
-
-    componentDidMount() {
-        this.props.sortByTitles();
-    }
-    render() {
-        const { data } = this.props;
-        const movieData = data.map((value, index) => <Movie key={value.id} movie={value} />)
-        return (
-            <div className="container1">
-                {movieData}
-            </div>
-        )
-    }
-}
+const MovieList = props => {
+  const { data } = props;
+  const movieData = data.map((value, index) => (
+    <Movie key={value.id} movie={value} />
+  ));
+  return <div className="MovieListContainer">{movieData}</div>;
+};
 export default MovieList;
