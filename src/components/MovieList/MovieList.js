@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import "./MovieList.css";
-import Movie from "./Movie";
+import React from 'react';
+import './MovieList.css';
+import MovieCard from '../MovieCard/MovieCard';
 
-const MovieList = props => {
-  const { data } = props;
-  const movieData = data.map((value, index) => (
-    <Movie key={value.id} movie={value} />
+const MovieList = ({ data }) => {
+  const movieData = data.map(value => (
+    <MovieCard key={value.id} movie={value} />
   ));
   return <div className="MovieListContainer">{movieData}</div>;
 };
