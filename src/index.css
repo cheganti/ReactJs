@@ -35,7 +35,7 @@ img {
 .newsUrlDiv span,
 a,
 .bold span {
-  padding: 0;
+  padding-left: 5px;
 }
 .bold {
   font-weight: bold;

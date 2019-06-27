@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './MovieSearch.css';
 
-export default function MovieSearch(props) {
+function MovieSearch(props) {
   const {
     handleMovieSearch,
     onClickResults,
@@ -56,4 +56,10 @@ export default function MovieSearch(props) {
 MovieSearch.propTypes = {
   isTitle: PropTypes.bool.isRequired,
   isGenres: PropTypes.bool.isRequired,
+  handleMovieSearch: PropTypes.func.isRequired,
+  onClickResults: PropTypes.func.isRequired,
+  searchByTitles: PropTypes.func.isRequired,
+  searchByGengres: PropTypes.func.isRequired,
 };
+
+export default MovieSearch;

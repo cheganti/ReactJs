@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './MovieList.css';
 import MovieCard from '../MovieCard/MovieCard';
 
@@ -9,3 +10,6 @@ const MovieList = ({ data }) => {
   return <div className="MovieListContainer">{movieData}</div>;
 };
 export default MovieList;
+MovieList.propTypes = {
+  data: PropTypes.node.isRequired,
+};

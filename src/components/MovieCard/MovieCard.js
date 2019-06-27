@@ -8,19 +8,17 @@ const MovieCard = ({ movie }) => (
     <p className="txtcolor">{movie.title}</p>
     <p className="bold">
       Release Date:
-      {' '}
-      {' '}
       <span className="normal">{movie.release_date}</span>
     </p>
     <p className="bold">
       Rating:
-      {' '}
       <span className="normal">{movie.vote_count}</span>
     </p>
     <p className="bold">
       Genre:
-      {' '}
-      <span className="normal">{movie.genres.join(', ')}</span>
+      <span className="normal">
+        { movie.genres.join(', ') }
+      </span>
     </p>
   </div>
 );

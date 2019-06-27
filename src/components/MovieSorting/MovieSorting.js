@@ -46,4 +46,6 @@ MovieSorting.propTypes = {
   }).isRequired,
   isRating: PropTypes.bool.isRequired,
   isRelease: PropTypes.bool.isRequired,
+  sortByRelease: PropTypes.func.isRequired,
+  sortByRating: PropTypes.func.isRequired,
 };
