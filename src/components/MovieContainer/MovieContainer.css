@@ -1,0 +1,21 @@
+.jumbotron {
+  background-color: #232323;
+  background: url(/public/img/Anticipated-Hollywood-Movies-2017.jpg) no-repeat
+    50% 28%;
+  background-size: cover;
+}
+.jumbotron:before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 19%;
+  bottom: 231px;
+  left: 19%;
+  background: linear-gradient(0deg, #232323, #232323);
+  opacity: 0.8;
+}
+@media (min-width: 576px) {
+  .jumbotron {
+    padding: 8rem 2rem;
+  }
+}
