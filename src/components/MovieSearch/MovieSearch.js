@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './MovieSearch.css';
+import { HandleInputs } from '../../store/actions';
+
+function handleMovieSearch(e) {
+  let targetValues = '';
+  if (e.target.value !== '') {
+    targetValues = e.target.value;
+  }
+  const { handleInputs } = this.props;
+  handleInputs(targetValues);
+}
 
 function MovieSearch(props) {
   const {
-    handleMovieSearch,
     onClickResults,
     searchByTitles,
     isTitle,
@@ -62,4 +72,22 @@ MovieSearch.propTypes = {
   searchByGengres: PropTypes.func.isRequired,
 };
 
-export default MovieSearch;
+const mapStateToProps = state => ({
+  results: state.results,
+  isTitle: state.isTitle,
+  isGenres: state.isGenres,
+  isRelease: state.isRelease,
+  isRating: state.isRating,
+
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleInputs: (data) => {
+    dispatch(HandleInputs(data));
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MovieSearch);

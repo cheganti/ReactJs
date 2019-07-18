@@ -1,23 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './MovieCard.css';
+import styles from './MovieCard.css';
 
 const MovieCard = ({ movie }) => (
-  <div className="card">
+  <div className={styles.card}>
     <img src={movie.poster_path} alt={movie.title} />
-    <p className="txtcolor">{movie.title}</p>
-    <p className="bold">
+    <p className={styles.txtcolor}>{movie.title}</p>
+    <p className={styles.bold}>
       Release Date:
-      <span className="normal">{movie.release_date}</span>
+      <span className={styles.normal}>{movie.release_date}</span>
     </p>
-    <p className="bold">
+    <p className={styles.bold}>
       Rating:
-      <span className="normal">{movie.vote_count}</span>
+      <span className={styles.normal}>{movie.vote_count}</span>
     </p>
-    <p className="bold">
+    <p className={styles.bold}>
       Genre:
-      <span className="normal">
-        { movie.genres.join(', ') }
+      <span className={styles.normal}>
+        {movie.genres.join(', ')}
       </span>
     </p>
   </div>

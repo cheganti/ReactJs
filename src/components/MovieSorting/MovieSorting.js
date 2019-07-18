@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './MovieSorting.css';
+import styles from './MovieSorting.css';
 
 export default function MovieSorting(props) {
   const {
@@ -11,13 +11,13 @@ export default function MovieSorting(props) {
     isRelease,
   } = props;
   return (
-    <div className="sortByDiv">
-      <div className="float-left">
-        <span className="bold">Count: </span>
-        <span>{data.length}</span>
+    <div className={styles.sortByDiv}>
+      <div className={styles['float-left']}>
+        <span className={styles.bold}>Count: </span>
+        {/* <span>{data.length}</span> */}
       </div>
-      <div className="float-right">
-        <span className="bold">Sort By:</span>
+      <div className={styles['float-right']}>
+        <span className={styles.bold}>Sort By:</span>
         <button
           type="button"
           onClick={sortByRelease}
@@ -41,9 +41,9 @@ export default function MovieSorting(props) {
   );
 }
 MovieSorting.propTypes = {
-  data: PropTypes.shape({
-    length: PropTypes.number,
-  }).isRequired,
+  // data: PropTypes.shape({
+  //   length: PropTypes.number,
+  // }).isRequired,
   isRating: PropTypes.bool.isRequired,
   isRelease: PropTypes.bool.isRequired,
   sortByRelease: PropTypes.func.isRequired,

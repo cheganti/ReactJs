@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
-import jsonData from '../../data/jsonData.json';
-import './MovieContainer.css';
+import { connect } from 'react-redux';
+import styles from './MovieContainer.css';
 import MovieList from '../MovieList/MovieList';
 import MovieSorting from '../MovieSorting/MovieSorting';
 import MovieSearch from '../MovieSearch/MovieSearch';
+import { ResultsData, GengresData } from '../../store/actions';
 
-export default class MovieContainer extends Component {
+class MovieContainer extends Component {
   constructor(props) {
     super(props);
-    this.moviesData = jsonData;
-
-    this.state = {
-      searchResults: this.moviesData.data,
-      updatedList: this.moviesData.data,
-      inputValues: '',
-      isTitle: false,
-      isGenres: false,
-      isRelease: true,
-      isRating: false,
-    };
-    this.handleMovieSearch = this.handleMovieSearch.bind(this);
+    // this.handleMovieSearch = this.handleMovieSearch.bind(this);
     this.onClickResults = this.onClickResults.bind(this);
     this.searchByGengres = this.searchByGengres.bind(this);
     this.sortByRelease = this.sortByRelease.bind(this);
@@ -28,7 +18,8 @@ export default class MovieContainer extends Component {
   }
 
   componentDidMount() {
-    this.searchByTitles();
+    const { searchResults, results } = this.props;
+    searchResults(results);
   }
 
   onClickResults() {
@@ -61,8 +52,8 @@ export default class MovieContainer extends Component {
     });
     this.setState({
       searchResults: sortResult,
-      isTitle: false,
-      isGenres: true,
+      // isTitle: false,
+      // isGenres: true,
     });
   }
 
@@ -79,8 +70,8 @@ export default class MovieContainer extends Component {
     });
     this.setState({
       searchResults: sortResult,
-      isTitle: true,
-      isGenres: false,
+      // isTitle: true,
+      // isGenres: false,
     });
   }
 
@@ -91,8 +82,8 @@ export default class MovieContainer extends Component {
     );
     this.setState({
       searchResults: sortResult,
-      isRelease: true,
-      isRating: false,
+      // isRelease: true,
+      // isRating: false,
     });
   }
 
@@ -101,46 +92,64 @@ export default class MovieContainer extends Component {
     const sortResult = searchResults.sort((a, b) => b.vote_count - a.vote_count);
     this.setState({
       searchResults: sortResult,
-      isRelease: false,
-      isRating: true,
+      // isRelease: false,
+      // isRating: true,
     });
   }
 
-  handleMovieSearch(e) {
-    let targetValues = '';
-    if (e.target.value !== '') {
-      targetValues = e.target.value;
-    }
-    this.setState({
-      inputValues: targetValues,
-    });
-  }
+  // handleMovieSearch(e) {
+  //   let targetValues = '';
+  //   if (e.target.value !== '') {
+  //     targetValues = e.target.value;
+  //   }
+  //   this.setState({
+  //     inputValues: targetValues,
+  //   });
+  // }
 
   render() {
-    const { searchResults } = this.state;
-    const { isTitle, isGenres } = this.state;
-    const { isRating, isRelease } = this.state;
+    console.log(this.props);
+    const { results, isTitle, isGenres, isRating, isRelease } = this.props;
+    // const { isTitle, isGenres } = this.state;
+    // const { isRating, isRelease } = this.state;
     return (
       <div>
-        <div className="jumbotron">
+        <div className={styles.jumbotron}>
           <MovieSearch
             isTitle={isTitle}
             isGenres={isGenres}
             onClickResults={this.onClickResults}
             searchByGengres={this.searchByGengres}
             searchByTitles={this.searchByTitles}
-            handleMovieSearch={this.handleMovieSearch}
           />
           <MovieSorting
             isRating={isRating}
             isRelease={isRelease}
-            data={searchResults}
+            data={results}
             sortByRelease={this.sortByRelease}
             sortByRating={this.sortByRating}
           />
         </div>
-        <MovieList data={searchResults} searchByTitles={this.searchByTitles} />
+        <MovieList data={results} searchByTitles={this.searchByTitles} />
       </div>
     );
   }
 }
+const mapStateToProps = state => ({
+  results: state.results,
+  isTitle: state.isTitle,
+  isGenres: state.isGenres,
+  isRelease: state.isRelease,
+  isRating: state.isRating,
+});
+
+const mapDispatchToProps = dispatch => ({
+  searchResults: (data) => {
+    dispatch(ResultsData(data));
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MovieContainer);
