@@ -1,91 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './MovieSearch.css';
-import { HandleInputs } from '../../store/actions';
+import { updateSearchText } from './MovieSearchActions';
+import cx from 'classnames';
+import CommonStyles from '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import styles from './MovieSearch.css';
 
-function handleMovieSearch(e) {
-  let targetValues = '';
-  if (e.target.value !== '') {
-    targetValues = e.target.value;
+class MovieSearch extends React.Component {
+  constructor(props) {
+    super(props);
   }
-  const { handleInputs } = this.props;
-  handleInputs(targetValues);
+  handleMovieSearch = (e) => {
+    this.props.updateSearchText(e.target.value);
+  }
+  render() {
+    const  { inputs } = this.props;
+    return (
+      <form className={cx(CommonStyles['navbar-form'], CommonStyles['navbar-left'])} role="search">
+        <div className={cx(CommonStyles['input-group'], CommonStyles['mb-3'])}>
+          <input type="text" value={inputs} className={CommonStyles['form-control']} placeholder="Enter movie's name" onChange={this.handleMovieSearch} />
+          <div className="input-group-append">
+            <button className={styles.searchBtn} children="Search"></button>
+          </div>
+        </div>
+      </form>
+    );
+  }
 }
 
-function MovieSearch(props) {
-  const {
-    onClickResults,
-    searchByTitles,
-    isTitle,
-    searchByGengres,
-    isGenres,
-  } = props;
-  return (
-    <div>
-      <h1 className="title">Find your movie</h1>
-      <div className="input-group mb-3">
-        <input
-          className="form-control"
-          type="text"
-          id="search"
-          placeholder="Search..."
-          onChange={handleMovieSearch}
-        />
-        <div className="input-group-append">
-          <button
-            type="button"
-            onClick={onClickResults}
-            className="btn btn-success-cus"
-          >
-            Search
-          </button>
-          <button
-            type="button"
-            onClick={searchByTitles}
-            className={`btn btn-success-cus ${isTitle === true
-              ? 'active'
-              : 'deactive'}`}
-          >
-            Title
-          </button>
-          <button
-            type="button"
-            onClick={searchByGengres}
-            className={`btn btn-success-cus ${isGenres === true
-              ? 'active'
-              : 'deactive'}`}
-          >
-            Genres
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
 MovieSearch.propTypes = {
-  isTitle: PropTypes.bool.isRequired,
-  isGenres: PropTypes.bool.isRequired,
-  handleMovieSearch: PropTypes.func.isRequired,
-  onClickResults: PropTypes.func.isRequired,
-  searchByTitles: PropTypes.func.isRequired,
-  searchByGengres: PropTypes.func.isRequired,
+  updateSearchText: PropTypes.func.isRequired,
+  inputs: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  results: state.results,
-  isTitle: state.isTitle,
-  isGenres: state.isGenres,
-  isRelease: state.isRelease,
-  isRating: state.isRating,
-
+  inputs: state.MovieSearchReducer.inputs,
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleInputs: (data) => {
-    dispatch(HandleInputs(data));
-  },
-});
+const mapDispatchToProps = dispatch => ({updateSearchText: searchText => {
+  dispatch(updateSearchText(searchText));
+},});
 
 export default connect(
   mapStateToProps,

@@ -1,8 +1,9 @@
 .sortByDiv {
-  text-align: right;
-  position: relative;
-  color: #ffffff;
-}
-.float-right .bold {
-  padding-right: 7px;
-}
+    text-align: right;
+    position: relative;
+    color: #ffffff;
+  }
+  .float-right .bold {
+    padding-right: 7px;
+  }
+  

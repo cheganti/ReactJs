@@ -1,0 +1,11 @@
+.detailedMovie_Text {
+    color: #F65261;
+}
+
+.media {
+    background: #000;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}

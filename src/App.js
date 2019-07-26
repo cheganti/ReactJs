@@ -1,22 +1,14 @@
 import React from 'react';
-import {
-  BrowserRouter as Router, Switch,
-} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import MovieContainer from './components/MovieContainer/MovieContainer';
-import { ErrorBoundary } from './ErrorsBoundary/ErrorBoundary';
-import store from './store/store';
-
+import store from './store';
+import Routes from './Routes';
+import ErrorBoundary from './ErrorsBoundary/ErrorBoundary';
 
 const App = () => (
   <Provider store={store}>
-    <Router>
-      <Switch>
-        <ErrorBoundary>
-          <MovieContainer />
-        </ErrorBoundary>
-      </Switch>
-    </Router>
+    <ErrorBoundary>
+      <Routes />
+    </ErrorBoundary>
   </Provider>
 );
 

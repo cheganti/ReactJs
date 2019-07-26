@@ -1,51 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import cx from 'classnames';
+import { setSortByRating, setSortByReleaseDate } from './MovieSortingActions';
+import CommonStyles from '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './MovieSorting.css';
 
-export default function MovieSorting(props) {
-  const {
-    data,
-    sortByRelease,
-    isRating,
-    sortByRating,
-    isRelease,
-  } = props;
-  return (
-    <div className={styles.sortByDiv}>
-      <div className={styles['float-left']}>
-        <span className={styles.bold}>Count: </span>
-        {/* <span>{data.length}</span> */}
-      </div>
-      <div className={styles['float-right']}>
-        <span className={styles.bold}>Sort By:</span>
-        <button
-          type="button"
-          onClick={sortByRelease}
-          className={`btn btn-success-cus ${isRating === true
-            ? 'active'
-            : 'deactive'}`}
-        >
-          Release Date
-        </button>
-        <button
-          type="button"
-          onClick={sortByRating}
-          className={`btn btn-success-cus ${isRelease === true
-            ? 'active'
-            : 'deactive'}`}
-        >
-          Rating
-        </button>
-      </div>
+const MovieSorting = ({
+  activeOnSort, count, dispatchSetSortByRating, dispatchSetSortByReleaseDate,
+}) => (
+  <div className={cx(styles.moviesubheadingSection, CommonStyles.clearfix)}>
+    <div className={cx(CommonStyles['float-left'], CommonStyles['float-md-left'])}>
+      <strong>
+        {count}
+      </strong>
+        movie found
     </div>
-  );
-}
+    <div className={cx(CommonStyles['float-right'], CommonStyles['float-md-right'])}>
+      SORT BY
+      <button className={`cx(CommonStyles['btn-sm'], CommonStyles['ml-1']) ${activeOnSort === 'release' ? styles.active : styles.inactive}`} onClick={dispatchSetSortByReleaseDate} children="RELEASE DATE"></button>
+      <button className={`cx(CommonStyles['btn-sm'], CommonStyles['ml-1']) ${activeOnSort === 'rating' ? styles.active : styles.inactive}`} onClick={dispatchSetSortByRating} children="RATING" ></button>
+    </div>
+  </div>
+);
 MovieSorting.propTypes = {
-  // data: PropTypes.shape({
-  //   length: PropTypes.number,
-  // }).isRequired,
-  isRating: PropTypes.bool.isRequired,
-  isRelease: PropTypes.bool.isRequired,
-  sortByRelease: PropTypes.func.isRequired,
-  sortByRating: PropTypes.func.isRequired,
+  activeOnSort: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+  dispatchSetSortByRating: PropTypes.func.isRequired,
+  dispatchSetSortByReleaseDate: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = null;
+
+const mapDispatchToProps = dispatch => ({
+  dispatchSetSortByRating: () => {
+    dispatch(setSortByRating());
+  },
+  dispatchSetSortByReleaseDate: () => {
+    dispatch(setSortByReleaseDate());
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MovieSorting);

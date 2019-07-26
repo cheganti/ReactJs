@@ -1,155 +1,114 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import MovieList from '../MovieList';
+import MovieSearch from '../MovieSearch';
+import MovieSearchByType from '../MovieSearchByType';
+import MovieSorting from '../MovieSorting';
+import cx from 'classnames';
+import CommonStyles from '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './MovieContainer.css';
-import MovieList from '../MovieList/MovieList';
-import MovieSorting from '../MovieSorting/MovieSorting';
-import MovieSearch from '../MovieSearch/MovieSearch';
-import { ResultsData, GengresData } from '../../store/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {
+  requestApiData,
+  clickStoreData,
+} from './MovieContainerActions';
 
 class MovieContainer extends Component {
   constructor(props) {
     super(props);
-    // this.handleMovieSearch = this.handleMovieSearch.bind(this);
-    this.onClickResults = this.onClickResults.bind(this);
-    this.searchByGengres = this.searchByGengres.bind(this);
-    this.sortByRelease = this.sortByRelease.bind(this);
-    this.searchByTitles = this.searchByTitles.bind(this);
-    this.sortByRating = this.sortByRating.bind(this);
   }
 
-  componentDidMount() {
-    const { searchResults, results } = this.props;
-    searchResults(results);
-  }
-
-  onClickResults() {
-    const { updatedList } = this.state;
-    let { inputValues } = this.state;
-    let movieList = '';
-    if (inputValues !== '') {
-      movieList = updatedList.filter((item) => {
-        inputValues = inputValues.toLowerCase();
-        return item.title.toLowerCase().includes(inputValues);
+  filterMovies = (inputSearchText, activeSearch, allMovies) => {
+    const currentMovieList = allMovies;
+    let filteredItem = inputSearchText || '';
+    let filteredMovieList = [];
+    if (activeSearch === 'title') {
+      filteredMovieList = currentMovieList.filter(movie => {
+        filteredItem = filteredItem.toLowerCase();
+        return movie.title.toLowerCase().includes(filteredItem);
       });
-    } else {
-      movieList = this.moviesData.data;
+    } else if (activeSearch === 'genre') {
+      filteredMovieList = currentMovieList.filter(movie => {
+        filteredItem = filteredItem.toLowerCase();
+        const matchedGenre = movie.genres.find(item => item.toLowerCase().includes(filteredItem))
+        return !!matchedGenre;
+      });
     }
-    this.setState({
-      searchResults: movieList,
-    });
+    return filteredMovieList;
+  };
+  getFilteredMoviesData = (Moviesdata, inputSearchText, activeSearch, activeOnSort) => {
+    const filteredMoviesData = this.filterMovies(inputSearchText, activeSearch, Moviesdata);
+    let filteredAndSortedData = [];
+    if (activeOnSort === 'release') {
+      filteredAndSortedData = this.sortByRelease(filteredMoviesData);
+    } else if (activeOnSort === 'rating') {
+      filteredAndSortedData = this.sortByRating(filteredMoviesData);
+    }
+    return filteredAndSortedData;
   }
+  sortByRelease = (movies) => {
+    const movieReleaseDate = movies;
+    let sortResult = movieReleaseDate.sort((a, b) => {
+      return new Date(b.release_date) - new Date(a.release_date);
+    });
+    return sortResult;
+  };
 
-  searchByGengres() {
-    const { searchResults } = this.state;
-    const sortResult = searchResults.sort((a, b) => {
-      let retval = 1;
-      if (a.genres > b.genres) {
-        retval = 1;
-      } if (a.genres < b.genres) {
-        retval = -1;
-      }
-      return retval;
+  sortByRating = (movies) => {
+    let sortResult = movies.sort((a, b) => {
+      return b.vote_count - a.vote_count;
     });
-    this.setState({
-      searchResults: sortResult,
-      // isTitle: false,
-      // isGenres: true,
-    });
-  }
+    return sortResult;
+  };
 
-  searchByTitles() {
-    const { searchResults } = this.state;
-    const sortResult = searchResults.sort((a, b) => {
-      let retval = 1;
-      if (a.title > b.title) {
-        retval = 1;
-      } if (a.title < b.title) {
-        retval = -1;
-      }
-      return retval;
-    });
-    this.setState({
-      searchResults: sortResult,
-      // isTitle: true,
-      // isGenres: false,
-    });
-  }
 
-  sortByRelease() {
-    const { searchResults } = this.state;
-    const sortResult = searchResults.sort(
-      (a, b) => new Date(b.release_date) - new Date(a.release_date),
-    );
-    this.setState({
-      searchResults: sortResult,
-      // isRelease: true,
-      // isRating: false,
-    });
-  }
-
-  sortByRating() {
-    const { searchResults } = this.state;
-    const sortResult = searchResults.sort((a, b) => b.vote_count - a.vote_count);
-    this.setState({
-      searchResults: sortResult,
-      // isRelease: false,
-      // isRating: true,
-    });
-  }
-
-  // handleMovieSearch(e) {
-  //   let targetValues = '';
-  //   if (e.target.value !== '') {
-  //     targetValues = e.target.value;
-  //   }
-  //   this.setState({
-  //     inputValues: targetValues,
-  //   });
-  // }
 
   render() {
-    console.log(this.props);
-    const { results, isTitle, isGenres, isRating, isRelease } = this.props;
-    // const { isTitle, isGenres } = this.state;
-    // const { isRating, isRelease } = this.state;
+    const { MovieContainerReducer, MovieSearchReducer, MovieSearchByTypeReducer, MovieSortingReducer } = this.props;
+    const activeOnSort = MovieSortingReducer ? MovieSortingReducer.activeOnSort : null;
+    const activeSearch = MovieSearchByTypeReducer ? MovieSearchByTypeReducer.activeSearch : null;
+    const inputSearchText = MovieSearchReducer && MovieSearchReducer.inputs ? MovieSearchReducer.inputs : '';
+    const MovieContainerReducerResponse = MovieContainerReducer ? MovieContainerReducer.receiveMoviesResponse : [];
+    let Moviesdata = MovieContainerReducerResponse ? MovieContainerReducerResponse.data : [];
+    const filteredAndSortedData = this.getFilteredMoviesData(Moviesdata, inputSearchText, activeSearch, activeOnSort);
+    const data = filteredAndSortedData || [];
     return (
       <div>
-        <div className={styles.jumbotron}>
+        <div className={cx(CommonStyles.jumbotron, styles.jumbotron)}>
+          <div>
+            <h1 className={styles.searchMovies}>Find your Movie</h1>
+          </div>
           <MovieSearch
-            isTitle={isTitle}
-            isGenres={isGenres}
-            onClickResults={this.onClickResults}
-            searchByGengres={this.searchByGengres}
-            searchByTitles={this.searchByTitles}
+            handleInputSearch={this.handleInputSearch}
           />
-          <MovieSorting
-            isRating={isRating}
-            isRelease={isRelease}
-            data={results}
-            sortByRelease={this.sortByRelease}
-            sortByRating={this.sortByRating}
-          />
+          <MovieSearchByType activeSearch={activeSearch} />
         </div>
-        <MovieList data={results} searchByTitles={this.searchByTitles} />
+        <MovieSorting count={data.length} activeOnSort={activeOnSort} />
+        <MovieList data={data} />
+        <div className={styles.footerBg}>
+          <strong>netflix</strong>
+          roulette
+        </div>
       </div>
     );
   }
 }
+
 const mapStateToProps = state => ({
-  results: state.results,
-  isTitle: state.isTitle,
-  isGenres: state.isGenres,
-  isRelease: state.isRelease,
-  isRating: state.isRating,
+  MovieContainerReducer: state.MovieContainerReducer,
+  MovieSearchReducer: state.MovieSearchReducer,
+  MovieSearchByTypeReducer: state.MovieSearchByTypeReducer,
+  MovieSortingReducer: state.MovieSortingReducer,
+  params: [state.params],
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchResults: (data) => {
-    dispatch(ResultsData(data));
-  },
-});
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { requestApiData, clickStoreData },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(MovieContainer);
