@@ -1,14 +1,10 @@
-import React, { Component } from "react";
-import MovieContainer from "./components/MovieContainer/MovieContainer";
-import { ErrorBoundary } from "./ErrorsBoundary/ErrorBoundary";
+import React from 'react';
+import { ErrorBoundary } from './ErrorsBoundary/ErrorBoundary';
+import Routes from './Routes';
 
-class App extends Component {
-  render() {
-    return (
-      <ErrorBoundary>
-        <MovieContainer />
-      </ErrorBoundary>
-    );
-  }
-}
+const App = () => (
+  <ErrorBoundary>
+    <Routes />
+  </ErrorBoundary>
+);
 export default App;
