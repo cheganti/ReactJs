@@ -5,7 +5,7 @@ import './MovieContainer.css';
 import MovieList from '../MovieList/MovieList';
 import MovieSorting from '../MovieSorting/MovieSorting';
 import MovieSearch from '../MovieSearch/MovieSearch';
-import { itemsFetchData, updateInputValue, updateSearchResults } from './MovieContainerActions';
+import { itemsFetchData, updateInputValue, updateSearchResults, sortbyTitleAction, sortbyGenreAction } from './MovieContainerActions';
 
 class MovieContainer extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class MovieContainer extends Component {
     this.onClickResults = this.onClickResults.bind(this);
     this.searchByGengres = this.searchByGengres.bind(this);
     // this.sortByRelease = this.sortByRelease.bind(this);
-    // this.searchByTitles = this.searchByTitles.bind(this);
+    this.searchByTitles = this.searchByTitles.bind(this);
     // this.sortByRating = this.sortByRating.bind(this);
   }
 
@@ -51,7 +51,7 @@ class MovieContainer extends Component {
   }
 
   searchByGengres() {
-    const { searchResults, updSearchRes } = this.props;
+    const { searchResults, sortByG } = this.props;
     const sortResult = searchResults.sort((a, b) => {
       let retval = 1;
       if (a.genres > b.genres) {
@@ -61,26 +61,24 @@ class MovieContainer extends Component {
       }
       return retval;
     });
-    updSearchRes(sortResult);
+    console.log(sortResult)
+    sortByG(sortResult);
   }
 
-  // searchByTitles() {
-  //   const { searchResults } = this.state;
-  //   const sortResult = searchResults.sort((a, b) => {
-  //     let retval = 1;
-  //     if (a.title > b.title) {
-  //       retval = 1;
-  //     } if (a.title < b.title) {
-  //       retval = -1;
-  //     }
-  //     return retval;
-  //   });
-  //   this.setState({
-  //     searchResults: sortResult,
-  //     isTitle: true,
-  //     isGenres: false,
-  //   });
-  // }
+  searchByTitles() {
+    const { searchResults, sortByT } = this.props;
+    const sortResult = searchResults.sort((a, b) => {
+      let retval = 1;
+      if (a.title > b.title) {
+        retval = 1;
+      } if (a.title < b.title) {
+        retval = -1;
+      }
+      return retval;
+    });
+    console.log(sortResult)
+    sortByT(sortResult);
+  }
 
   // sortByRelease() {
   //   const { searchResults } = this.state;
@@ -157,7 +155,14 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchData: () => dispatch(itemsFetchData()),
   updSearchRes: (data) => {
+    // console.log(data);
     dispatch(updateSearchResults(data));
+  },
+  sortByG: (genre) => {
+    dispatch(sortbyGenreAction(genre));
+  },
+  sortByT: (title) => {
+    dispatch(sortbyTitleAction(title));
   },
 });
 

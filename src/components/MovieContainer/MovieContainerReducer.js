@@ -1,4 +1,4 @@
-import { UPDATE_INPUT_VALUE,UPDATE_SEARCH_RESULTS, MOVIES_API_FETCH } from './MovieContainerActions';
+import { UPDATE_INPUT_VALUE, UPDATE_SEARCH_RESULTS, MOVIES_API_FETCH, SORT_BY_GENRE, SORT_BY_TITLE } from './MovieContainerActions';
 
 const initialState = {
   searchResults: [],
@@ -11,7 +11,7 @@ const initialState = {
 };
 
 const movieContainerReducer = (state = initialState, action) => {
-  console.log(state);
+  // console.log(state);
   switch (action.type) {
     case UPDATE_INPUT_VALUE:
       return {
@@ -25,7 +25,17 @@ const movieContainerReducer = (state = initialState, action) => {
       };
 
     case UPDATE_SEARCH_RESULTS:
-      console.log(action.payload);
+      // console.log(action.payload);
+      return {
+        ...state,
+        searchResults: action.payload,
+      }
+    case SORT_BY_GENRE:
+      return {
+        ...state,
+        searchResults: action.payload,
+      }
+    case SORT_BY_TITLE:
       return {
         ...state,
         searchResults: action.payload,
