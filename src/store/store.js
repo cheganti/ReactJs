@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import movieContainerReducer from '../components/MovieContainer/MovieContainerReducer';
+import movieReducer from '../components/MovieContainer/movieReducer';
 
-const store = createStore(movieContainerReducer, applyMiddleware(thunk));
+const store = createStore(movieReducer, applyMiddleware(thunk));
 
 export default store;

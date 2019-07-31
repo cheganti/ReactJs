@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import jsonData from '../../data/jsonData.json';
 import './MovieContainer.css';
 import MovieList from '../MovieList/MovieList';
 import MovieSorting from '../MovieSorting/MovieSorting';
 import MovieSearch from '../MovieSearch/MovieSearch';
-import { itemsFetchData, updateInputValue, updateSearchResults, sortbyTitleAction, sortbyGenreAction } from './MovieContainerActions';
+import { itemsFetchData, updateInputValue, updateSearchResults } from './movieActions';
 
 class MovieContainer extends Component {
   constructor(props) {
@@ -24,9 +23,9 @@ class MovieContainer extends Component {
     this.handleMovieSearch = this.handleMovieSearch.bind(this);
     this.onClickResults = this.onClickResults.bind(this);
     this.searchByGengres = this.searchByGengres.bind(this);
-    // this.sortByRelease = this.sortByRelease.bind(this);
+    this.sortByRelease = this.sortByRelease.bind(this);
     this.searchByTitles = this.searchByTitles.bind(this);
-    // this.sortByRating = this.sortByRating.bind(this);
+    this.sortByRating = this.sortByRating.bind(this);
   }
 
   componentDidMount() {
@@ -51,7 +50,7 @@ class MovieContainer extends Component {
   }
 
   searchByGengres() {
-    const { searchResults, sortByG } = this.props;
+    const { searchResults } = this.props;
     const sortResult = searchResults.sort((a, b) => {
       let retval = 1;
       if (a.genres > b.genres) {
@@ -61,12 +60,12 @@ class MovieContainer extends Component {
       }
       return retval;
     });
-    console.log(sortResult)
-    sortByG(sortResult);
+    const { updInput } = this.props;
+    updInput(sortResult);
   }
 
   searchByTitles() {
-    const { searchResults, sortByT } = this.props;
+    const { searchResults } = this.props;
     const sortResult = searchResults.sort((a, b) => {
       let retval = 1;
       if (a.title > b.title) {
@@ -76,31 +75,25 @@ class MovieContainer extends Component {
       }
       return retval;
     });
-    console.log(sortResult)
-    sortByT(sortResult);
+    const { updInput } = this.props;
+    updInput(sortResult);
   }
 
-  // sortByRelease() {
-  //   const { searchResults } = this.state;
-  //   const sortResult = searchResults.sort(
-  //     (a, b) => new Date(b.release_date) - new Date(a.release_date),
-  //   );
-  //   this.setState({
-  //     searchResults: sortResult,
-  //     isRelease: true,
-  //     isRating: false,
-  //   });
-  // }
+  sortByRelease() {
+    const { searchResults } = this.props;
+    const sortResult = searchResults.sort(
+      (a, b) => new Date(b.release_date) - new Date(a.release_date),
+    );
+    const { updInput } = this.props;
+    updInput(sortResult);
+  }
 
-  // sortByRating() {
-  //   const { searchResults } = this.state;
-  //   const sortResult = searchResults.sort((a, b) => b.vote_count - a.vote_count);
-  //   this.setState({
-  //     searchResults: sortResult,
-  //     isRelease: false,
-  //     isRating: true,
-  //   });
-  // }
+  sortByRating() {
+    const { searchResults } = this.props;
+    const sortResult = searchResults.sort((a, b) => b.vote_count - a.vote_count);
+    const { updInput } = this.props;
+    updInput(sortResult);
+  }
 
   handleMovieSearch(e) {
     let targetValues = '';
@@ -157,12 +150,6 @@ const mapDispatchToProps = dispatch => ({
   updSearchRes: (data) => {
     // console.log(data);
     dispatch(updateSearchResults(data));
-  },
-  sortByG: (genre) => {
-    dispatch(sortbyGenreAction(genre));
-  },
-  sortByT: (title) => {
-    dispatch(sortbyTitleAction(title));
   },
 });
 
