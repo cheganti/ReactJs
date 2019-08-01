@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './MovieCard.css';
+import { Link } from 'react-router-dom';
 
 const MovieCard = ({ movie }) => (
   <div className="card">
-    <img src={movie.poster_path} alt={movie.title} />
+    <Link to={`/movie/${movie.id}`}>
+      <img src={movie.poster_path} alt={movie.title} />
+    </Link>
     <p className="txtcolor">{movie.title}</p>
     <p className="bold">
       Release Date:
@@ -17,7 +20,7 @@ const MovieCard = ({ movie }) => (
     <p className="bold">
       Genre:
       <span className="normal">
-        { movie.genres.join(', ') }
+        {movie.genres.join(', ')}
       </span>
     </p>
   </div>

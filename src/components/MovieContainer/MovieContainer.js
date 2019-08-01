@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import jsonData from '../../data/jsonData.json';
+import { connect } from 'react-redux';
 import './MovieContainer.css';
 import MovieList from '../MovieList/MovieList';
 import MovieSorting from '../MovieSorting/MovieSorting';
 import MovieSearch from '../MovieSearch/MovieSearch';
+import { itemsFetchData, updateInputValue, updateSearchResults } from './movieActions';
 
-export default class MovieContainer extends Component {
+class MovieContainer extends Component {
   constructor(props) {
     super(props);
-    this.moviesData = jsonData;
+    // this.moviesData = jsonData;
 
-    this.state = {
-      searchResults: this.moviesData.data,
-      updatedList: this.moviesData.data,
-      inputValues: '',
-      isTitle: false,
-      isGenres: false,
-      isRelease: true,
-      isRating: false,
-    };
+    // this.state =
+    //   searchResults: this.moviesData.data,
+    //   updatedList: this.moviesData.data,
+    //   inputValues: '',
+    //   isTitle: false,
+    //   isGenres: false,
+    //   isRelease: true,
+    //   isRating: false,
+    // };
     this.handleMovieSearch = this.handleMovieSearch.bind(this);
     this.onClickResults = this.onClickResults.bind(this);
     this.searchByGengres = this.searchByGengres.bind(this);
@@ -28,28 +29,28 @@ export default class MovieContainer extends Component {
   }
 
   componentDidMount() {
-    this.searchByTitles();
+    const { fetchData } = this.props;
+    fetchData();
   }
 
   onClickResults() {
-    const { updatedList } = this.state;
-    let { inputValues } = this.state;
+    // const { updatedList } = this.state;
+    let { inputValues, searchResults, updSearchRes } = this.props;
+    // let updatedList = searchResults;
+
     let movieList = '';
     if (inputValues !== '') {
-      movieList = updatedList.filter((item) => {
+      movieList = searchResults.filter((item) => {
         inputValues = inputValues.toLowerCase();
         return item.title.toLowerCase().includes(inputValues);
       });
-    } else {
-      movieList = this.moviesData.data;
     }
-    this.setState({
-      searchResults: movieList,
-    });
+
+    updSearchRes(movieList);
   }
 
   searchByGengres() {
-    const { searchResults } = this.state;
+    const { searchResults } = this.props;
     const sortResult = searchResults.sort((a, b) => {
       let retval = 1;
       if (a.genres > b.genres) {
@@ -59,15 +60,12 @@ export default class MovieContainer extends Component {
       }
       return retval;
     });
-    this.setState({
-      searchResults: sortResult,
-      isTitle: false,
-      isGenres: true,
-    });
+    const { updInput } = this.props;
+    updInput(sortResult);
   }
 
   searchByTitles() {
-    const { searchResults } = this.state;
+    const { searchResults } = this.props;
     const sortResult = searchResults.sort((a, b) => {
       let retval = 1;
       if (a.title > b.title) {
@@ -77,33 +75,24 @@ export default class MovieContainer extends Component {
       }
       return retval;
     });
-    this.setState({
-      searchResults: sortResult,
-      isTitle: true,
-      isGenres: false,
-    });
+    const { updInput } = this.props;
+    updInput(sortResult);
   }
 
   sortByRelease() {
-    const { searchResults } = this.state;
+    const { searchResults } = this.props;
     const sortResult = searchResults.sort(
       (a, b) => new Date(b.release_date) - new Date(a.release_date),
     );
-    this.setState({
-      searchResults: sortResult,
-      isRelease: true,
-      isRating: false,
-    });
+    const { updInput } = this.props;
+    updInput(sortResult);
   }
 
   sortByRating() {
-    const { searchResults } = this.state;
+    const { searchResults } = this.props;
     const sortResult = searchResults.sort((a, b) => b.vote_count - a.vote_count);
-    this.setState({
-      searchResults: sortResult,
-      isRelease: false,
-      isRating: true,
-    });
+    const { updInput } = this.props;
+    updInput(sortResult);
   }
 
   handleMovieSearch(e) {
@@ -111,15 +100,13 @@ export default class MovieContainer extends Component {
     if (e.target.value !== '') {
       targetValues = e.target.value;
     }
-    this.setState({
-      inputValues: targetValues,
-    });
+    const { updInput } = this.props;
+    updInput(e.target.value);
   }
 
   render() {
-    const { searchResults } = this.state;
-    const { isTitle, isGenres } = this.state;
-    const { isRating, isRelease } = this.state;
+    const { searchResults, isTitle, isGenres, isRating, isRelease } = this.props;
+
     return (
       <div>
         <div className="jumbotron">
@@ -144,3 +131,26 @@ export default class MovieContainer extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  searchResults: state.searchResults,
+  updatedList: state.updatedList,
+  inputValues: state.inputValues,
+  isTitle: state.isTitle,
+  isGenres: state.isGenres,
+  isRelease: state.isRelease,
+  isRating: state.isRating,
+});
+
+const mapDispatchToProps = dispatch => ({
+  updInput: (value) => {
+    dispatch(updateInputValue(value));
+  },
+  fetchData: () => dispatch(itemsFetchData()),
+  updSearchRes: (data) => {
+    // console.log(data);
+    dispatch(updateSearchResults(data));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieContainer);

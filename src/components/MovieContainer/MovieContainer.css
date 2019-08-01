@@ -4,7 +4,7 @@
     50% 28%;
   background-size: cover;
 }
-.jumbotron:before {
+/* .jumbotron:before {
   content: "";
   position: absolute;
   top: 0px;
@@ -13,7 +13,7 @@
   left: 19%;
   background: linear-gradient(0deg, #232323, #232323);
   opacity: 0.8;
-}
+} */
 @media (min-width: 576px) {
   .jumbotron {
     padding: 8rem 2rem;

@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import MovieContainer from "./components/MovieContainer/MovieContainer";
-import { ErrorBoundary } from "./ErrorsBoundary/ErrorBoundary";
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import { ErrorBoundary } from './ErrorsBoundary/ErrorBoundary';
+import Routes from './Routes';
 
-class App extends Component {
-  render() {
-    return (
-      <ErrorBoundary>
-        <MovieContainer />
-      </ErrorBoundary>
-    );
-  }
-}
+const App = () => (
+  <Provider store={store}>
+    <ErrorBoundary>
+      <Routes />
+    </ErrorBoundary>
+  </Provider>
+);
 export default App;
