@@ -60,8 +60,8 @@ class MovieContainer extends Component {
       }
       return retval;
     });
-    const { updInput } = this.props;
-    updInput(sortResult);
+    const { updatedInput } = this.props;
+    updatedInput(sortResult);
   }
 
   searchByTitles() {
@@ -75,8 +75,8 @@ class MovieContainer extends Component {
       }
       return retval;
     });
-    const { updInput } = this.props;
-    updInput(sortResult);
+    const { updatedInput } = this.props;
+    updatedInput(sortResult);
   }
 
   sortByRelease() {
@@ -84,15 +84,15 @@ class MovieContainer extends Component {
     const sortResult = searchResults.sort(
       (a, b) => new Date(b.release_date) - new Date(a.release_date),
     );
-    const { updInput } = this.props;
-    updInput(sortResult);
+    const { updatedInput } = this.props;
+    updatedInput(sortResult);
   }
 
   sortByRating() {
     const { searchResults } = this.props;
     const sortResult = searchResults.sort((a, b) => b.vote_count - a.vote_count);
-    const { updInput } = this.props;
-    updInput(sortResult);
+    const { updatedInput } = this.props;
+    updatedInput(sortResult);
   }
 
   handleMovieSearch(e) {
@@ -100,8 +100,8 @@ class MovieContainer extends Component {
     if (e.target.value !== '') {
       targetValues = e.target.value;
     }
-    const { updInput } = this.props;
-    updInput(e.target.value);
+    const { updatedInput } = this.props;
+    updatedInput(e.target.value);
   }
 
   render() {
@@ -143,7 +143,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updInput: (value) => {
+  updatedInput: (value) => {
     dispatch(updateInputValue(value));
   },
   fetchData: () => dispatch(itemsFetchData()),

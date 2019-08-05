@@ -23,7 +23,7 @@ function MovieSearch(props) {
           onChange={handleMovieSearch}
         />
         <div className="input-group-append">
-          <button
+          <button id="searchBtn"
             type="button"
             onClick={onClickResults}
             className="btn btn-success-cus"
