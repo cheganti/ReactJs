@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieSorting renders without breaking 1`] = `
+<div
+  className="sortByDiv"
+>
+  <div
+    className="float-left"
+  >
+    <span
+      className="bold"
+    >
+      Count: 
+    </span>
+    <span>
+      10
+    </span>
+  </div>
+  <div
+    className="float-right"
+  >
+    <span
+      className="bold"
+    >
+      Sort By:
+    </span>
+    <button
+      className="btn btn-success-cus deactive"
+      type="button"
+    >
+      Release Date
+    </button>
+    <button
+      className="btn btn-success-cus deactive"
+      type="button"
+    >
+      Rating
+    </button>
+  </div>
+</div>
+`;

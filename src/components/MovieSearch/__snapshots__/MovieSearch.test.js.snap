@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieSorting renders without breaking 1`] = `
+<div>
+  <h1
+    className="title"
+  >
+    Find your movie
+  </h1>
+  <div
+    className="input-group mb-3"
+  >
+    <input
+      className="form-control"
+      id="search"
+      onChange={[MockFunction]}
+      placeholder="Search..."
+      type="text"
+    />
+    <div
+      className="input-group-append"
+    >
+      <button
+        className="btn btn-success-cus"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Search
+      </button>
+      <button
+        className="btn btn-success-cus deactive"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Title
+      </button>
+      <button
+        className="btn btn-success-cus deactive"
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Genres
+      </button>
+    </div>
+  </div>
+</div>
+`;

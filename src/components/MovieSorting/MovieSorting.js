@@ -4,7 +4,7 @@ import './MovieSorting.css';
 
 export default function MovieSorting(props) {
   const {
-    data,
+    count,
     sortByRelease,
     isRating,
     sortByRating,
@@ -14,7 +14,7 @@ export default function MovieSorting(props) {
     <div className="sortByDiv">
       <div className="float-left">
         <span className="bold">Count: </span>
-        <span>{data.length}</span>
+        <span>{count}</span>
       </div>
       <div className="float-right">
         <span className="bold">Sort By:</span>
@@ -41,9 +41,7 @@ export default function MovieSorting(props) {
   );
 }
 MovieSorting.propTypes = {
-  data: PropTypes.shape({
-    length: PropTypes.number,
-  }).isRequired,
+  count: PropTypes.number.isRequired,
   isRating: PropTypes.bool.isRequired,
   isRelease: PropTypes.bool.isRequired,
   sortByRelease: PropTypes.func.isRequired,
