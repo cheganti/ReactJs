@@ -22,6 +22,7 @@ exports[`MovieSorting renders without breaking 1`] = `
     >
       <button
         className="btn btn-success-cus"
+        id="searchBtn"
         onClick={[MockFunction]}
         type="button"
       >

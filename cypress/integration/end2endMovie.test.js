@@ -1,3 +1,4 @@
+import { cy } from 'cypress';
 describe('login', () => {
   beforeEach(() => {
     cy.visit('http://localhost:8080');
