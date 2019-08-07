@@ -10,7 +10,6 @@ describe('actions', () => {
     const inputValue = '';
     const expectedAction = {
       type: UPDATE_INPUT_VALUE,
-      payload
     };
     expect(updateInputValue(inputValue)).toEqual(expectedAction);
   });
@@ -18,7 +17,6 @@ describe('actions', () => {
     const searchResults = '';
     const expectedAction = {
       type: UPDATE_SEARCH_RESULTS,
-      payload
     };
     expect(updateSearchResults(searchResults)).toEqual(expectedAction);
   });

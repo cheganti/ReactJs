@@ -1,5 +1,5 @@
 import { cy } from 'cypress';
-describe('login', () => {
+describe('Test', () => {
   beforeEach(() => {
     cy.visit('http://localhost:8080');
   })
@@ -8,9 +8,9 @@ describe('login', () => {
   });
 
   it('Search Text + Click + Single Count', () => {
-    const serchMovieName = "Tomb Raider";
-    cy.get("#search").type(serchMovieName)
-    cy.get("#searchBtn").click();
+    const serchMovieName = 'Tomb Raider';
+    cy.get('#search').type(serchMovieName)
+    cy.get('#searchBtn').click();
     cy.get('.card').its('length').should('eq', 1)
   });
 })
